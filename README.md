@@ -1,7 +1,7 @@
 # Gyropode - Robot Auto-Équilibrant
 
-![Gyropode](images/gyro.jpg)
-![IHM Bluetooth](images/ihm.jpg)
+![Gyropode](images/gyro.JPG)
+![IHM Bluetooth](images/ihm.JPG)
 
 ## 📋 Description du Projet
 
