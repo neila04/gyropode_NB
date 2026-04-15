@@ -82,8 +82,8 @@ void controle(void *parameters)
 
     // Calcul des dérivées
     // nb top /tour = 748 et Te en ms et R roue = 32.5mm
-    vitG = (posG_actuelle - old_posG) * (2*PI/748) *(1000/Te) * 0.0325;
-    vitD = (posD_actuelle - old_posD) * (2*PI/748) *(1000/Te) * 0.0325;
+    vitG = (posG_actuelle - old_posG) * (2 * PI / 748) * (1000 / Te) * 0.0325;
+    vitD = (posD_actuelle - old_posD) * (2 * PI / 748) * (1000 / Te) * 0.0325;
 
     // Mémorisation
     old_posG = posG_actuelle;
@@ -106,7 +106,7 @@ void controle(void *parameters)
     if (teta_cons < -0.15)
       teta_cons = -0.15;
     if (teta_cons == 0.0)
-      teta_cons == 0.0;  
+      teta_cons == 0.0;
 
     mpu.getEvent(&a, &g, &temp); // lecture des grandeurs
 
@@ -140,7 +140,6 @@ void controle(void *parameters)
     ledcWrite(canalDp, alpha2);
     ledcWrite(canalDn, alpha1);
 
-    
     FlagCalcul = 1;
     vTaskDelayUntil(&xLastWakeTime, pdMS_TO_TICKS(Te));
   }
@@ -275,7 +274,6 @@ void reception(char ch)
     if (commande == "vit")
     {
       vit_cons = valeur.toFloat();
-
     }
 
     chaine = "";
@@ -299,8 +297,9 @@ void loop()
 
   if (FlagCalcul == 1)
   {
+    // test hyperterminal
 
-    //  Serial.printf("%lf %lf %lf \n", a.acceleration.x, a.acceleration.y, a.acceleration.z);
+    // Serial.printf("%lf %lf %lf \n", a.acceleration.x, a.acceleration.y, a.acceleration.z);
     // Serial.printf(" %.2f  %.2f %.2f %.2f \n", tetaG, tetaGF, tetaW, tetaW + tetaGF); // valeurs des angles de gravité et filtré en rad
     // Serial.printf(" %.2f  %.2f %.2f %.2f \n", tetaG, tetaGF, tetaW, g.gyro.z); // valeurs des angles de gravité et filtré en deg
     // Serial.printf("%lf %lf %lf %lf \n", ec, teta * 180 / M_PI, C0, tetaG * 180 / M_PI);
@@ -308,11 +307,9 @@ void loop()
     // Serial.printf("%lf %lf %lf %lf", ec, teta * 180 / M_PI, Kp * (0 - teta) , Kd * g.gyro.z);
     // Serial.printf("%lf %lf %lf %lf \n", vit_cons, vitMoyF, Av, Bv);
     // Serial.printf("%lf %lf \n", vitMoyF, teta_cons);
-    //Serial.printf("%f %f\n", vitMoyF, teta_cons);
-    //Serial.printf("%f %f %f %d\n", vitMoyF, teta_cons, vit_cons, posG_actuelle);
-
-    Serial.printf("%f %f %f\n", vitMoyF, teta_cons, vit_cons);
-
+    // Serial.printf("%f %f\n", vitMoyF, teta_cons);
+    // Serial.printf("%f %f %f %d\n", vitMoyF, teta_cons, vit_cons, posG_actuelle);
+    // Serial.printf("%f %f %f\n", vitMoyF, teta_cons, vit_cons);
     // SerialBT.printf("%.2f %.2f\n", vitMoyF, teta * 180 / M_PI); // envoie vitesse filtrée et angle en degrés vers la tablette via Bluetooth
 
     static int compteur = 0;
@@ -320,15 +317,9 @@ void loop()
 
     if (compteur >= 40)
     {
-      //SerialBT.printf("%lf \n", vitMoyF);
+      // SerialBT.printf("%lf \n", vitMoyF);
       compteur = 0;
     }
-
-    // long newPositionG = encoderG.getCount() / 2;
-    // Serial.println(newPositionG);
-
-    // long newPositionD = encoderD.getCount() / 2;
-    // Serial.println(newPositionD);
 
     FlagCalcul = 0;
   }
